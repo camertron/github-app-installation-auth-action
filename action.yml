@@ -8,7 +8,7 @@ inputs:
     description: 'An RSA private key associated with the App.'
     required: true
   client-id:
-    description: 'The App's client ID.'
+    description: "The App's client ID."
     required: true
   client-secret:
     description: 'A client secret associated with the App.'
