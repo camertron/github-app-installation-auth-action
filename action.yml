@@ -21,7 +21,9 @@ outputs:
     description: "An access token for the given installation."
     value: ${{ steps.run.outputs.access-token }}
 runs:
+  using: "composite"
   steps:
-    - id: run
-      uses: node18
-      main: dist/index.js
+    - uses: actions/setup-node@v3
+      with:
+        node-version: 18
+    - run: node dist/index.js
