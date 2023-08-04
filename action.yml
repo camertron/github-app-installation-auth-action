@@ -19,7 +19,9 @@ inputs:
 outputs:
   access-token:
     description: "An access token for the given installation."
-    value: ${{ steps.random-number-generator.outputs.random-number }}
+    value: ${{ steps.run.outputs.access-token }}
 runs:
-  using: node18
-  main: dist/index.js
+  steps:
+    - id: run
+      using: node18
+      main: dist/index.js
