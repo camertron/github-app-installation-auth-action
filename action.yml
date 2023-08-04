@@ -1,0 +1,25 @@
+name: 'GitHub App Installation Auth'
+description: 'Retrieves an access token for a GitHub App installation.'
+inputs:
+  app-id:
+    description: 'The ID of the GitHub App.'
+    required: true
+  private-key:
+    description: 'An RSA private key associated with the App.'
+    required: true
+  client-id:
+    description: 'The App's client ID.'
+    required: true
+  client-secret:
+    description: 'A client secret associated with the App.'
+    required: true
+  installation-id:
+    description: 'The ID of the installation to fetch a token for.'
+    required: true
+outputs:
+  access-token:
+    description: "An access token for the given installation."
+    value: ${{ steps.random-number-generator.outputs.random-number }}
+runs:
+  using: node18
+  main: dist/index.js
