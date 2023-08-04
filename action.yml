@@ -27,3 +27,4 @@ runs:
       with:
         node-version: 18
     - run: node dist/index.js
+      shell: bash
