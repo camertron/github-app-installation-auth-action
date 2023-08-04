@@ -23,5 +23,5 @@ outputs:
 runs:
   steps:
     - id: run
-      using: node18
+      uses: node18
       main: dist/index.js
