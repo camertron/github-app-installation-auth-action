@@ -1,5 +1,7 @@
+import fetch from 'node-fetch'
 import * as core from '@actions/core'
 import { createAppAuth } from '@octokit/auth-app'
+import { request } from '@octokit/request'
 import * as fs from 'node:fs'
 
 main()
@@ -11,7 +13,14 @@ async function main(): Promise<void> {
     const clientSecret = core.getInput('client-secret')
     const installationId = core.getInput('installation-id')
 
-    const auth = createAppAuth({appId, privateKey, clientId, clientSecret})
+    const req = request.defaults({request: {fetch}})
+    const auth = createAppAuth({
+        appId,
+        privateKey,
+        clientId,
+        clientSecret,
+        request: req
+    })
 
     const installationAuth = await auth({
         type: 'installation',
