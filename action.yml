@@ -24,7 +24,6 @@ inputs:
 outputs:
   access-token:
     description: "An access token for the given installation."
-    value: ${{ steps.run.outputs.access-token }}
 runs:
   using: node16
   main: dist/main.js
