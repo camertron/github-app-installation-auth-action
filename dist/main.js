@@ -5102,10 +5102,10 @@ var require_core = __commonJS({
       command_1.issueCommand("set-env", { name }, convertedVal);
     }
     exports.exportVariable = exportVariable;
-    function setSecret2(secret) {
+    function setSecret(secret) {
       command_1.issueCommand("add-mask", {}, secret);
     }
-    exports.setSecret = setSecret2;
+    exports.setSecret = setSecret;
     function addPath(inputPath) {
       const filePath = process.env["GITHUB_PATH"] || "";
       if (filePath) {
@@ -20796,7 +20796,6 @@ async function main() {
     const encrypted = crypto4.publicEncrypt(pubKey, Buffer.from(token));
     token = encrypted.toString("base64");
   }
-  core.setSecret(token);
   core.setOutput("access-token", token);
 }
 /*! Bundled license information:
