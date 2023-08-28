@@ -42,9 +42,5 @@ async function main(): Promise<void> {
 
     // Register the token with the runner as a secret to ensure it is masked in logs
     core.setSecret(token);
-
     core.setOutput('access-token', token);
-
-    // Make token accessible to post function (so we can invalidate it)
-    core.saveState('access-token', token);
 }

@@ -5210,14 +5210,14 @@ Support boolean input list: \`true | True | TRUE | false | False | FALSE\``);
       });
     }
     exports.group = group;
-    function saveState2(name, value) {
+    function saveState(name, value) {
       const filePath = process.env["GITHUB_STATE"] || "";
       if (filePath) {
         return file_command_1.issueFileCommand("STATE", file_command_1.prepareKeyValueMessage(name, value));
       }
       command_1.issueCommand("save-state", { name }, utils_1.toCommandValue(value));
     }
-    exports.saveState = saveState2;
+    exports.saveState = saveState;
     function getState(name) {
       return process.env[`STATE_${name}`] || "";
     }
@@ -20798,7 +20798,6 @@ async function main() {
   }
   core.setSecret(token);
   core.setOutput("access-token", token);
-  core.saveState("access-token", token);
 }
 /*! Bundled license information:
 
