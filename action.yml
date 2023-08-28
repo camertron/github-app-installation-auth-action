@@ -16,10 +16,16 @@ inputs:
   installation-id:
     description: 'The ID of the installation to fetch a token for.'
     required: true
+  encrypt:
+    description: Whether or not to encrypt the result using the App's private key. Useful if passing the token to a shared action that lives in a separate repository.
+    required: false
+    type: boolean
+    default: false
 outputs:
   access-token:
     description: "An access token for the given installation."
     value: ${{ steps.run.outputs.access-token }}
 runs:
   using: node16
-  main: dist/index.js
+  main: dist/main.js
+  post: dist/post.js

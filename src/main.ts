@@ -2,7 +2,7 @@ import fetch from 'node-fetch'
 import * as core from '@actions/core'
 import { createAppAuth } from '@octokit/auth-app'
 import { request } from '@octokit/request'
-import * as fs from 'node:fs'
+import * as crypto from 'node:crypto'
 
 main()
 
@@ -12,6 +12,7 @@ async function main(): Promise<void> {
     const clientId = core.getInput('client-id')
     const clientSecret = core.getInput('client-secret')
     const installationId = core.getInput('installation-id')
+    const shouldEncrypt = core.getBooleanInput('encrypt')
 
     const req = request.defaults({request: {fetch}})
     const auth = createAppAuth({
@@ -27,6 +28,23 @@ async function main(): Promise<void> {
         installationId: installationId
     })
 
-    const token = installationAuth.token
-    fs.writeFileSync(process.env["GITHUB_OUTPUT"]!, `access-token=${token}`)
+    let token = installationAuth.token
+
+    if (shouldEncrypt) {
+        const pubKey = crypto.createPublicKey({
+            key: privateKey,
+            format: 'pem'
+        })
+
+        const encrypted = crypto.publicEncrypt(pubKey, Buffer.from(token))
+        token = encrypted.toString('base64')
+    }
+
+    // Register the token with the runner as a secret to ensure it is masked in logs
+    core.setSecret(token);
+
+    core.setOutput('access-token', token);
+
+    // Make token accessible to post function (so we can invalidate it)
+    core.saveState('access-token', token);
 }
